@@ -32,7 +32,7 @@ RUN npm install
 RUN npm run build
 
 WORKDIR /app
-RUN chmod +x start.sh
+RUN sed -i 's/\r$//' start.sh && chmod +x start.sh
 
 # Hugging Face Spaces port
 EXPOSE 7860
