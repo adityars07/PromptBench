@@ -1,0 +1,1129 @@
+{
+  "metadata": {
+    "task": "Summarise a customer support email into JSON with keys: issue, urgency (low/medium/high), suggested_action.",
+    "timestamp": "2026-11-22T18:00:00Z",
+    "runsPerCase": 3,
+    "models": [
+      "gemini-1.5-flash",
+      "llama-3.1-8b-instant"
+    ]
+  },
+  "results": [
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-01",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: Hello, I checked my credit card statement this morning and n... They want help with their issue.",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"Hello, I checked my credit card statemen\", \"action\": \"Reply back\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 4.8,
+        "relevance": 5.5,
+        "consistency": 4.3,
+        "instructionFollowing": 3.3,
+        "overall": 4.5
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-01",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: Hello, I checked my credit card statement this morning and n... They want help with their issue.",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"Hello, I checked my credit card statemen\", \"action\": \"Reply back\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 4.5,
+        "relevance": 5.2,
+        "consistency": 4.0,
+        "instructionFollowing": 3.0,
+        "overall": 4.2
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-01",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"issue refund\"}\\n```",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"issue refund\"}\\n```",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"issue refund\"}\\n```",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 7.7,
+        "relevance": 8.1,
+        "consistency": 7.3,
+        "instructionFollowing": 7.9,
+        "overall": 7.8
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-01",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"issue refund\"}\\n```",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"issue refund\"}\\n```",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"issue refund\"}\\n```",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 7.4,
+        "relevance": 7.8,
+        "consistency": 7.0,
+        "instructionFollowing": 7.6,
+        "overall": 7.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-01",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"Issue refund\"}",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"Issue refund\"}",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"Issue refund\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 9.7,
+        "relevance": 9.5,
+        "consistency": 9.3,
+        "instructionFollowing": 10.0,
+        "overall": 9.6
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-01",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"Issue refund\"}",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"Issue refund\"}",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Duplicate charge\", \"urgency\": \"high\", \"suggested_action\": \"Issue refund\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 9.4,
+        "relevance": 9.2,
+        "consistency": 9.0,
+        "instructionFollowing": 9.8,
+        "overall": 9.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-02",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: The wireless headphones I received yesterday won't turn on e... They want help with their issue.",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"The wireless headphones I received yeste\", \"action\": \"Reply back\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 4.8,
+        "relevance": 5.5,
+        "consistency": 4.3,
+        "instructionFollowing": 3.3,
+        "overall": 4.5
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-02",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: The wireless headphones I received yesterday won't turn on e... They want help with their issue.",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"The wireless headphones I received yeste\", \"action\": \"Reply back\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 4.5,
+        "relevance": 5.2,
+        "consistency": 4.0,
+        "instructionFollowing": 3.0,
+        "overall": 4.2
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-02",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"send replacement unit\"}\\n```",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"send replacement unit\"}\\n```",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"send replacement unit\"}\\n```",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 7.7,
+        "relevance": 8.1,
+        "consistency": 7.3,
+        "instructionFollowing": 7.9,
+        "overall": 7.8
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-02",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"send replacement unit\"}\\n```",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"send replacement unit\"}\\n```",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"send replacement unit\"}\\n```",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 7.4,
+        "relevance": 7.8,
+        "consistency": 7.0,
+        "instructionFollowing": 7.6,
+        "overall": 7.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-02",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"Send replacement unit\"}",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"Send replacement unit\"}",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"Send replacement unit\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 9.7,
+        "relevance": 9.5,
+        "consistency": 9.3,
+        "instructionFollowing": 10.0,
+        "overall": 9.6
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-02",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"Send replacement unit\"}",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"Send replacement unit\"}",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Defective hardware\", \"urgency\": \"medium\", \"suggested_action\": \"Send replacement unit\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 9.4,
+        "relevance": 9.2,
+        "consistency": 9.0,
+        "instructionFollowing": 9.8,
+        "overall": 9.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-03",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: My tracking number TRK-881920 shows package delayed in trans... They want help with their issue.",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"My tracking number TRK-881920 shows pack\", \"action\": \"Reply back\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 4.8,
+        "relevance": 5.5,
+        "consistency": 4.3,
+        "instructionFollowing": 3.3,
+        "overall": 4.5
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-03",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: My tracking number TRK-881920 shows package delayed in trans... They want help with their issue.",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"My tracking number TRK-881920 shows pack\", \"action\": \"Reply back\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 4.5,
+        "relevance": 5.2,
+        "consistency": 4.0,
+        "instructionFollowing": 3.0,
+        "overall": 4.2
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-03",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"contact courier\"}\\n```",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"contact courier\"}\\n```",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"contact courier\"}\\n```",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 7.7,
+        "relevance": 8.1,
+        "consistency": 7.3,
+        "instructionFollowing": 7.9,
+        "overall": 7.8
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-03",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"contact courier\"}\\n```",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"contact courier\"}\\n```",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"contact courier\"}\\n```",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 7.4,
+        "relevance": 7.8,
+        "consistency": 7.0,
+        "instructionFollowing": 7.6,
+        "overall": 7.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-03",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"Contact courier\"}",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"Contact courier\"}",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"Contact courier\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 9.7,
+        "relevance": 9.5,
+        "consistency": 9.3,
+        "instructionFollowing": 10.0,
+        "overall": 9.6
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-03",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"Contact courier\"}",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"Contact courier\"}",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Delayed shipment\", \"urgency\": \"medium\", \"suggested_action\": \"Contact courier\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 9.4,
+        "relevance": 9.2,
+        "consistency": 9.0,
+        "instructionFollowing": 9.8,
+        "overall": 9.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-04",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: Love your software! Would it be possible to add a Dark Mode ... They want help with their issue.",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"Love your software! Would it be possible\", \"action\": \"Reply back\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 4.8,
+        "relevance": 5.5,
+        "consistency": 4.3,
+        "instructionFollowing": 3.3,
+        "overall": 4.5
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-04",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: Love your software! Would it be possible to add a Dark Mode ... They want help with their issue.",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"Love your software! Would it be possible\", \"action\": \"Reply back\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 4.5,
+        "relevance": 5.2,
+        "consistency": 4.0,
+        "instructionFollowing": 3.0,
+        "overall": 4.2
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-04",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"feature request\", \"urgency\": \"medium\", \"suggested_action\": \"log in feedback backlog\"}\\n```",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"feature request\", \"urgency\": \"medium\", \"suggested_action\": \"log in feedback backlog\"}\\n```",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"feature request\", \"urgency\": \"medium\", \"suggested_action\": \"log in feedback backlog\"}\\n```",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 7.7,
+        "relevance": 8.1,
+        "consistency": 7.3,
+        "instructionFollowing": 7.9,
+        "overall": 7.8
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-04",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"feature request\", \"urgency\": \"medium\", \"suggested_action\": \"log in feedback backlog\"}\\n```",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"feature request\", \"urgency\": \"medium\", \"suggested_action\": \"log in feedback backlog\"}\\n```",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"feature request\", \"urgency\": \"medium\", \"suggested_action\": \"log in feedback backlog\"}\\n```",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 7.4,
+        "relevance": 7.8,
+        "consistency": 7.0,
+        "instructionFollowing": 7.6,
+        "overall": 7.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-04",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Feature request\", \"urgency\": \"low\", \"suggested_action\": \"Log in feedback backlog\"}",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Feature request\", \"urgency\": \"low\", \"suggested_action\": \"Log in feedback backlog\"}",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Feature request\", \"urgency\": \"low\", \"suggested_action\": \"Log in feedback backlog\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 9.7,
+        "relevance": 9.5,
+        "consistency": 9.3,
+        "instructionFollowing": 10.0,
+        "overall": 9.6
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-04",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Feature request\", \"urgency\": \"low\", \"suggested_action\": \"Log in feedback backlog\"}",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Feature request\", \"urgency\": \"low\", \"suggested_action\": \"Log in feedback backlog\"}",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Feature request\", \"urgency\": \"low\", \"suggested_action\": \"Log in feedback backlog\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 9.4,
+        "relevance": 9.2,
+        "consistency": 9.0,
+        "instructionFollowing": 9.8,
+        "overall": 9.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-05",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: URGENT: I cannot log in to my admin account after changing m... They want help with their issue.",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"URGENT: I cannot log in to my admin acco\", \"action\": \"Reply back\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 4.8,
+        "relevance": 5.5,
+        "consistency": 4.3,
+        "instructionFollowing": 3.3,
+        "overall": 4.5
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-05",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: URGENT: I cannot log in to my admin account after changing m... They want help with their issue.",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"URGENT: I cannot log in to my admin acco\", \"action\": \"Reply back\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 4.5,
+        "relevance": 5.2,
+        "consistency": 4.0,
+        "instructionFollowing": 3.0,
+        "overall": 4.2
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-05",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"locked out\", \"urgency\": \"high\", \"suggested_action\": \"reset 2FA\"}\\n```",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"locked out\", \"urgency\": \"high\", \"suggested_action\": \"reset 2FA\"}\\n```",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"locked out\", \"urgency\": \"high\", \"suggested_action\": \"reset 2FA\"}\\n```",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 7.7,
+        "relevance": 8.1,
+        "consistency": 7.3,
+        "instructionFollowing": 7.9,
+        "overall": 7.8
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-05",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"locked out\", \"urgency\": \"high\", \"suggested_action\": \"reset 2FA\"}\\n```",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"locked out\", \"urgency\": \"high\", \"suggested_action\": \"reset 2FA\"}\\n```",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"locked out\", \"urgency\": \"high\", \"suggested_action\": \"reset 2FA\"}\\n```",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 7.4,
+        "relevance": 7.8,
+        "consistency": 7.0,
+        "instructionFollowing": 7.6,
+        "overall": 7.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-05",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Locked out\", \"urgency\": \"high\", \"suggested_action\": \"Reset 2fa\"}",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Locked out\", \"urgency\": \"high\", \"suggested_action\": \"Reset 2fa\"}",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Locked out\", \"urgency\": \"high\", \"suggested_action\": \"Reset 2fa\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 9.7,
+        "relevance": 9.5,
+        "consistency": 9.3,
+        "instructionFollowing": 10.0,
+        "overall": 9.6
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-05",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Locked out\", \"urgency\": \"high\", \"suggested_action\": \"Reset 2fa\"}",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Locked out\", \"urgency\": \"high\", \"suggested_action\": \"Reset 2fa\"}",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Locked out\", \"urgency\": \"high\", \"suggested_action\": \"Reset 2fa\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 9.4,
+        "relevance": 9.2,
+        "consistency": 9.0,
+        "instructionFollowing": 9.8,
+        "overall": 9.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-06",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: I am writing to inquire if I can pause or cancel my annual p... They want help with their issue.",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"I am writing to inquire if I can pause o\", \"action\": \"Reply back\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 4.8,
+        "relevance": 5.5,
+        "consistency": 4.3,
+        "instructionFollowing": 3.3,
+        "overall": 4.5
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v1",
+      "testCaseId": "tc-06",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "The customer says: I am writing to inquire if I can pause or cancel my annual p... They want help with their issue.",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "Issue: Customer complaint. Urgency: high. Please fix it.",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"problem\": \"I am writing to inquire if I can pause o\", \"action\": \"Reply back\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 4.5,
+        "relevance": 5.2,
+        "consistency": 4.0,
+        "instructionFollowing": 3.0,
+        "overall": 4.2
+      },
+      "pass": false
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-06",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"pause or cancel plan\", \"urgency\": \"medium\", \"suggested_action\": \"explain options\"}\\n```",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"pause or cancel plan\", \"urgency\": \"medium\", \"suggested_action\": \"explain options\"}\\n```",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"pause or cancel plan\", \"urgency\": \"medium\", \"suggested_action\": \"explain options\"}\\n```",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 7.7,
+        "relevance": 8.1,
+        "consistency": 7.3,
+        "instructionFollowing": 7.9,
+        "overall": 7.8
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v2",
+      "testCaseId": "tc-06",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "```json\\n{\"issue\": \"pause or cancel plan\", \"urgency\": \"medium\", \"suggested_action\": \"explain options\"}\\n```",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "```json\\n{\"issue\": \"pause or cancel plan\", \"urgency\": \"medium\", \"suggested_action\": \"explain options\"}\\n```",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "```json\\n{\"issue\": \"pause or cancel plan\", \"urgency\": \"medium\", \"suggested_action\": \"explain options\"}\\n```",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 7.4,
+        "relevance": 7.8,
+        "consistency": 7.0,
+        "instructionFollowing": 7.6,
+        "overall": 7.4
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-06",
+      "model": "gemini-1.5-flash",
+      "provider": "google",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Pause or cancel plan\", \"urgency\": \"low\", \"suggested_action\": \"Explain options\"}",
+          "latencyMs": 850
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Pause or cancel plan\", \"urgency\": \"low\", \"suggested_action\": \"Explain options\"}",
+          "latencyMs": 895
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Pause or cancel plan\", \"urgency\": \"low\", \"suggested_action\": \"Explain options\"}",
+          "latencyMs": 940
+        }
+      ],
+      "scores": {
+        "accuracy": 9.7,
+        "relevance": 9.5,
+        "consistency": 9.3,
+        "instructionFollowing": 10.0,
+        "overall": 9.6
+      },
+      "pass": true
+    },
+    {
+      "promptVersionId": "v3",
+      "testCaseId": "tc-06",
+      "model": "llama-3.1-8b-instant",
+      "provider": "groq",
+      "runs": [
+        {
+          "runIndex": 0,
+          "response": "{\"issue\": \"Pause or cancel plan\", \"urgency\": \"low\", \"suggested_action\": \"Explain options\"}",
+          "latencyMs": 420
+        },
+        {
+          "runIndex": 1,
+          "response": "{\"issue\": \"Pause or cancel plan\", \"urgency\": \"low\", \"suggested_action\": \"Explain options\"}",
+          "latencyMs": 465
+        },
+        {
+          "runIndex": 2,
+          "response": "{\"issue\": \"Pause or cancel plan\", \"urgency\": \"low\", \"suggested_action\": \"Explain options\"}",
+          "latencyMs": 510
+        }
+      ],
+      "scores": {
+        "accuracy": 9.4,
+        "relevance": 9.2,
+        "consistency": 9.0,
+        "instructionFollowing": 9.8,
+        "overall": 9.4
+      },
+      "pass": true
+    }
+  ]
+}

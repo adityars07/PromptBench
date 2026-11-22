@@ -1,0 +1,262 @@
+[
+  {
+    "id": "tc-01",
+    "type": "Normal",
+    "input": "Hello, I checked my credit card statement this morning and noticed that I was billed twice for my subscription renewal ($129.99 x 2) on invoice #INV-4921. Please refund the duplicate charge immediately.",
+    "expectedOutput": "{\"issue\":\"Duplicate subscription charge of $129.99 on invoice #INV-4921\",\"urgency\":\"high\",\"suggested_action\":\"Refund duplicate charge and notify customer\"}",
+    "keyPoints": [
+      "duplicate charge",
+      "invoice #INV-4921",
+      "high urgency",
+      "issue refund"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-02",
+    "type": "Normal",
+    "input": "The wireless headphones I received yesterday won't turn on even after charging them overnight for 10 hours. The LED indicator doesn't light up at all. I would like a replacement unit.",
+    "expectedOutput": "{\"issue\":\"New wireless headphones defective and won't power on\",\"urgency\":\"medium\",\"suggested_action\":\"Initiate RMA replacement for defective headphones\"}",
+    "keyPoints": [
+      "defective hardware",
+      "won't turn on",
+      "medium urgency",
+      "send replacement unit"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-03",
+    "type": "Normal",
+    "input": "My tracking number TRK-881920 shows package delayed in transit for the last 5 days with no scans. Can someone check where my shipment is?",
+    "expectedOutput": "{\"issue\":\"Shipment TRK-881920 delayed in transit for 5 days\",\"urgency\":\"medium\",\"suggested_action\":\"Inquire with carrier and provide tracking status update\"}",
+    "keyPoints": [
+      "delayed shipment",
+      "tracking TRK-881920",
+      "medium urgency",
+      "contact courier"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-04",
+    "type": "Normal",
+    "input": "Love your software! Would it be possible to add a Dark Mode option in the settings menu? My eyes get fatigued working late hours.",
+    "expectedOutput": "{\"issue\":\"Feature request for Dark Mode in user interface\",\"urgency\":\"low\",\"suggested_action\":\"Log feedback into product roadmap backlog\"}",
+    "keyPoints": [
+      "feature request",
+      "dark mode",
+      "low urgency",
+      "log in feedback backlog"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-05",
+    "type": "Normal",
+    "input": "URGENT: I cannot log in to my admin account after changing my 2FA device. I am locked out and our entire team cannot access our client database.",
+    "expectedOutput": "{\"issue\":\"Admin locked out of account following 2FA device change\",\"urgency\":\"high\",\"suggested_action\":\"Verify administrator identity and initiate emergency 2FA reset\"}",
+    "keyPoints": [
+      "locked out",
+      "2FA failure",
+      "high urgency",
+      "reset 2FA"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-06",
+    "type": "Normal",
+    "input": "I am writing to inquire if I can pause or cancel my annual plan since I will be on sabbatical for the next six months. What are my options?",
+    "expectedOutput": "{\"issue\":\"Customer requesting account pause or cancellation during sabbatical\",\"urgency\":\"low\",\"suggested_action\":\"Explain subscription pause policy and provide cancellation options\"}",
+    "keyPoints": [
+      "pause or cancel plan",
+      "low urgency",
+      "explain options"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-07",
+    "type": "Edge",
+    "input": "I have three problems: First, my package arrived broken. Second, I was charged $25 shipping when it said free shipping. Third, can you send me a 20% discount coupon for my next order?",
+    "expectedOutput": "{\"issue\":\"Damaged package delivery and incorrect shipping charge\",\"urgency\":\"high\",\"suggested_action\":\"Refund incorrect shipping charge and dispatch replacement for broken items\"}",
+    "keyPoints": [
+      "multiple complaints",
+      "broken package",
+      "incorrect charge",
+      "high urgency"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-08",
+    "type": "Edge",
+    "input": "Hi support team, necesito ayuda urgente con mi facturaci\u00f3n. Mi tarjeta fue cobrada tres veces ayer por error. Please help me resolve this soon.",
+    "expectedOutput": "{\"issue\":\"Customer credit card billed three times erroneously\",\"urgency\":\"high\",\"suggested_action\":\"Review Spanish inquiry, reverse duplicate charges, and confirm in Spanish/English\"}",
+    "keyPoints": [
+      "multilingual",
+      "triple charge",
+      "high urgency",
+      "reverse charges"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-09",
+    "type": "Edge",
+    "input": "Help",
+    "expectedOutput": "{\"issue\":\"Vague one-word support request without details\",\"urgency\":\"low\",\"suggested_action\":\"Send automated clarification message requesting customer account and issue details\"}",
+    "keyPoints": [
+      "terse input",
+      "low urgency",
+      "ask for clarification"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-10",
+    "type": "Edge",
+    "input": "No rush at all, please take your time over the weekend, but our production payment gateway has completely crashed and customers cannot complete any checkout.",
+    "expectedOutput": "{\"issue\":\"Production payment gateway outage halting customer checkout\",\"urgency\":\"high\",\"suggested_action\":\"Escalate to on-call engineering team immediately for payment gateway restoration\"}",
+    "keyPoints": [
+      "contradictory tone",
+      "production outage",
+      "high urgency",
+      "escalate to engineering"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-11",
+    "type": "Invalid",
+    "input": "   ",
+    "expectedOutput": "{\"issue\":\"Empty input message\",\"urgency\":\"low\",\"suggested_action\":\"Prompt sender to provide inquiry details\"}",
+    "keyPoints": [
+      "empty input",
+      "low urgency",
+      "error handling"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  },
+  {
+    "id": "tc-12",
+    "type": "Invalid",
+    "input": "!!!@@@###$$$%%%^^^&&&***((( ||| >>> <<< ??? 99999999 xxxxx",
+    "expectedOutput": "{\"issue\":\"Gibberish or invalid non-text communication\",\"urgency\":\"low\",\"suggested_action\":\"Flag as invalid submission and send standard inquiry template\"}",
+    "keyPoints": [
+      "gibberish",
+      "low urgency",
+      "flag invalid"
+    ],
+    "constraints": {
+      "maxWords": 50,
+      "validJson": true,
+      "language": "en",
+      "requiredKeys": [
+        "issue",
+        "urgency",
+        "suggested_action"
+      ]
+    }
+  }
+]
