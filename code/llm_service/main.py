@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 from judge import JUDGE_SYSTEM_PROMPT, build_judge_prompt, compute_consistency
 
 load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), "../../.env"))
 
 app = FastAPI(title="PromptBench LLM Service", version="1.0.0")
 
@@ -120,12 +121,20 @@ async def call_llm(provider: str, model: str, system_prompt: str, user_prompt: s
                         messages.append({"role": "system", "content": system_prompt})
                     messages.append({"role": "user", "content": user_prompt})
 
-                    completion = groq_client.chat.completions.create(
-                        model=model if model else "llama-3.1-8b-instant",
-                        messages=messages,
-                        temperature=max(0.0, min(1.5, temperature))
-                    )
-                    return completion.choices[0].message.content or ""
+                    models_to_try = [model if model else "llama-3.1-8b-instant", "qwen/qwen3.8-27b", "openai/gpt-oss-120b", "openai/gpt-oss-20b"]
+                    for idx, target_model in enumerate(models_to_try):
+                        try:
+                            completion = groq_client.chat.completions.create(
+                                model=target_model,
+                                messages=messages,
+                                temperature=max(0.0, min(1.5, temperature))
+                            )
+                            return completion.choices[0].message.content or ""
+                        except Exception as me:
+                            if ("model_not_found" in str(me) or "does not exist" in str(me)) and idx < len(models_to_try) - 1:
+                                continue
+                            raise me
+                    return ""
 
                 return await asyncio.to_thread(_groq_call)
 
@@ -199,7 +208,7 @@ async def judge_candidate(req: JudgeRequest):
 
     # Determine provider for judge: prefer Google, then Groq
     provider = "google" if (GEMINI_API_KEY and genai_client) else ("groq" if (GROQ_API_KEY and groq_client) else None)
-    model = "gemini-1.5-flash" if provider == "google" else "llama-3.1-8b-instant"
+    model = "gemini-1.5-flash" if provider == "google" else "qwen/qwen3.8-27b"
 
     if not provider:
         # Heuristic fallback if no API keys are configured
