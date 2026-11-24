@@ -1,3 +1,14 @@
+---
+title: PromptBench — AI Prompt Evaluation Platform
+emoji: ⚡
+colorFrom: indigo
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: false
+license: mit
+---
+
 # PromptBench — AI Prompt Evaluation Platform
 
 PromptBench is an end-to-end full-stack evaluation workbench designed to help AI engineers and developers systematically optimize, compare, and stress-test LLM prompts across multiple model providers. Users define evaluation benchmarks, author prompt revisions, execute multi-turn consistency runs, and inspect detailed performance analytics across accuracy, relevance, semantic consistency, and deterministic instruction-following.
