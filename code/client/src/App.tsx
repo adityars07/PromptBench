@@ -1,142 +1,211 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar } from './components/Sidebar';
+import { ResultsView } from './components/ResultsView';
+import { PromptsView } from './components/PromptsView';
+import { RunEvaluationView } from './components/RunEvaluationView';
 import { TaskAndTestCases } from './components/TaskAndTestCases';
-import { Prompts } from './components/Prompts';
-import { RunEvaluation } from './components/RunEvaluation';
-import { Dashboard } from './Dashboard';
-import { ExportTab } from './components/ExportTab';
-import { TestCase, PromptVersion, EvalResult, WeightConfig } from './types';
-import { fetchTestCases, fetchPrompts, fetchResults, fetchCachedResults } from './api';
-
-type TabType = 'task' | 'prompts' | 'run' | 'results' | 'export';
+import {
+  TestCase,
+  PromptVersion,
+  LeaderboardRow,
+  PerTestResult,
+  WeightSettings
+} from './types';
+import {
+  fetchTestCases,
+  fetchPrompts,
+  fetchLeaderboard,
+  fetchDrillDown,
+  saveTestCase,
+  deleteTestCase,
+  savePrompt
+} from './api';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('results');
+  // Global App Settings
   const [demoMode, setDemoMode] = useState<boolean>(true);
-  const [selectedModels, setSelectedModels] = useState<string[]>(['gemini-1.5-flash', 'llama-3.1-8b-instant']);
+  const [selectedModels, setSelectedModels] = useState<string[]>([
+    'Gemini 2.5 Flash',
+    'Llama 3.3 70B'
+  ]);
   const [runsPerCase, setRunsPerCase] = useState<number>(3);
-  const [weights, setWeights] = useState<WeightConfig>({
-    accuracy: 0.25,
-    relevance: 0.25,
-    consistency: 0.25,
-    instructionFollowing: 0.25
+  const [weights, setWeights] = useState<WeightSettings>({
+    accuracy: 35,
+    relevance: 25,
+    consistency: 20,
+    instruction: 20
   });
 
+  // Data State
   const [testCases, setTestCases] = useState<TestCase[]>([]);
   const [prompts, setPrompts] = useState<PromptVersion[]>([]);
-  const [results, setResults] = useState<EvalResult[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardRow[]>([]);
+  const [drillDown, setDrillDown] = useState<PerTestResult[]>([]);
 
-  const loadData = async () => {
-    const [tcData, promptData] = await Promise.all([
-      fetchTestCases(),
-      fetchPrompts()
+  // Load Initial Data
+  const loadInitialData = async () => {
+    const [tc, pr, lb, dd] = await Promise.all([
+      fetchTestCases(demoMode),
+      fetchPrompts(demoMode),
+      fetchLeaderboard(weights, demoMode),
+      fetchDrillDown(demoMode)
     ]);
-    setTestCases(tcData);
-    setPrompts(promptData);
-
-    // Initial results load
-    try {
-      const res = await fetchResults();
-      if (res && res.length > 0) {
-        setResults(res);
-      } else {
-        const cached = await fetchCachedResults();
-        setResults(cached.results);
-      }
-    } catch {
-      const cached = await fetchCachedResults();
-      setResults(cached.results);
-    }
+    setTestCases(tc);
+    setPrompts(pr);
+    setLeaderboard(lb);
+    setDrillDown(dd);
   };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    loadInitialData();
+  }, [demoMode]);
+
+  // Handle Dynamic Weight Changes
+  useEffect(() => {
+    fetchLeaderboard(weights, demoMode).then(setLeaderboard);
+  }, [weights, demoMode]);
+
+  // Handlers for Test Cases
+  const handleSaveTestCase = async (tc: TestCase) => {
+    await saveTestCase(tc, demoMode);
+    setTestCases(prev => {
+      const idx = prev.findIndex(item => item.id === tc.id);
+      if (idx >= 0) {
+        const next = [...prev];
+        next[idx] = tc;
+        return next;
+      }
+      return [...prev, tc];
+    });
+  };
+
+  const handleDeleteTestCase = async (id: string) => {
+    await deleteTestCase(id, demoMode);
+    setTestCases(prev => prev.filter(t => t.id !== id));
+  };
+
+  // Handlers for Prompts
+  const handleSavePrompt = async (p: PromptVersion) => {
+    await savePrompt(p, demoMode);
+    setPrompts(prev => prev.map(item => (item.id === p.id ? p : item)));
+  };
+
+  const handleCreateNewPrompt = () => {
+    const nextNum = prompts.length + 1;
+    const newVersion: PromptVersion = {
+      id: `v${nextNum}`,
+      name: `v${nextNum} · Iterative refinement`,
+      title: `v${nextNum}`,
+      subtitle: 'Iterative refinement',
+      temperature: 0.2,
+      tempLabel: 'temp 0.2',
+      changeNote: 'Iterative improvements to prompt guidance.',
+      systemPrompt: 'You are a customer support triage assistant.\nReturn valid JSON only.',
+      userTemplate: 'Summarise the email below into JSON format.\n\nEmail:\n{email}',
+      examplesCount: 1
+    };
+    setPrompts(prev => [...prev, newVersion]);
+  };
+
+  const handleDuplicatePrompt = (basePrompt: PromptVersion) => {
+    const nextNum = prompts.length + 1;
+    const duplicated: PromptVersion = {
+      ...basePrompt,
+      id: `v${nextNum}`,
+      name: `v${nextNum} · Copy of ${basePrompt.title}`,
+      title: `v${nextNum}`,
+      subtitle: `Fork of ${basePrompt.subtitle}`,
+      changeNote: `Branched from ${basePrompt.title} to test parameter variations.`
+    };
+    setPrompts(prev => [...prev, duplicated]);
+  };
 
   const handleEvaluationComplete = async () => {
-    const res = await fetchResults();
-    setResults(res);
-    setActiveTab('results');
+    const lb = await fetchLeaderboard(weights, demoMode);
+    setLeaderboard(lb);
   };
 
   return (
-    <div className="app-container">
-      <Sidebar
-        demoMode={demoMode}
-        setDemoMode={setDemoMode}
-        selectedModels={selectedModels}
-        setSelectedModels={setSelectedModels}
-        runsPerCase={runsPerCase}
-        setRunsPerCase={setRunsPerCase}
-        weights={weights}
-        setWeights={setWeights}
-      />
+    <BrowserRouter>
+      <div className="app-shell">
+        {/* Left Sidebar */}
+        <Sidebar
+          demoMode={demoMode}
+          setDemoMode={setDemoMode}
+          selectedModels={selectedModels}
+          setSelectedModels={setSelectedModels}
+          runsPerCase={runsPerCase}
+          setRunsPerCase={setRunsPerCase}
+          weights={weights}
+          setWeights={setWeights}
+        />
 
-      <main className="main-wrapper">
-        <header className="top-navbar">
-          <nav className="tab-nav">
-            <button
-              className={`tab-btn ${activeTab === 'task' ? 'active' : ''}`}
-              onClick={() => setActiveTab('task')}
-            >
-              📋 Task & Test Cases
-            </button>
-            <button
-              className={`tab-btn ${activeTab === 'prompts' ? 'active' : ''}`}
-              onClick={() => setActiveTab('prompts')}
-            >
-              ✍️ Prompts Repository
-            </button>
-            <button
-              className={`tab-btn ${activeTab === 'run' ? 'active' : ''}`}
-              onClick={() => setActiveTab('run')}
-            >
-              ⚡ Run Evaluation
-            </button>
-            <button
-              className={`tab-btn ${activeTab === 'results' ? 'active' : ''}`}
-              onClick={() => setActiveTab('results')}
-            >
-              📊 Results Dashboard
-            </button>
-            <button
-              className={`tab-btn ${activeTab === 'export' ? 'active' : ''}`}
-              onClick={() => setActiveTab('export')}
-            >
-              📥 Export
-            </button>
-          </nav>
-        </header>
-
-        <section className="content-body">
-          {activeTab === 'task' && (
-            <TaskAndTestCases testCases={testCases} refreshTestCases={loadData} />
-          )}
-          {activeTab === 'prompts' && (
-            <Prompts prompts={prompts} refreshPrompts={loadData} />
-          )}
-          {activeTab === 'run' && (
-            <RunEvaluation
-              prompts={prompts}
-              testCases={testCases}
-              selectedModels={selectedModels}
-              runsPerCase={runsPerCase}
-              demoMode={demoMode}
-              onEvaluationComplete={handleEvaluationComplete}
+        {/* Main Content View with React Router */}
+        <main className="main-content">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ResultsView
+                  demoMode={demoMode}
+                  weights={weights}
+                  leaderboard={leaderboard}
+                  drillDown={drillDown}
+                />
+              }
             />
-          )}
-          {activeTab === 'results' && (
-            <Dashboard
-              results={results}
-              prompts={prompts}
-              testCases={testCases}
-              weights={weights}
+            <Route
+              path="/results"
+              element={
+                <ResultsView
+                  demoMode={demoMode}
+                  weights={weights}
+                  leaderboard={leaderboard}
+                  drillDown={drillDown}
+                />
+              }
             />
-          )}
-          {activeTab === 'export' && <ExportTab />}
-        </section>
-      </main>
-    </div>
+            <Route
+              path="/task"
+              element={
+                <TaskAndTestCases
+                  testCases={testCases}
+                  onSaveTestCase={handleSaveTestCase}
+                  onDeleteTestCase={handleDeleteTestCase}
+                />
+              }
+            />
+            <Route
+              path="/prompts"
+              element={
+                <PromptsView
+                  prompts={prompts}
+                  onSavePrompt={handleSavePrompt}
+                  onCreateNewPrompt={handleCreateNewPrompt}
+                  onDuplicatePrompt={handleDuplicatePrompt}
+                />
+              }
+            />
+            <Route
+              path="/run"
+              element={
+                <RunEvaluationView
+                  prompts={prompts}
+                  selectedModels={selectedModels}
+                  runsPerCase={runsPerCase}
+                  onRunsPerCaseChange={setRunsPerCase}
+                  onEvaluationComplete={handleEvaluationComplete}
+                  demoMode={demoMode}
+                />
+              }
+            />
+            {/* Fallback to /results */}
+            <Route path="*" element={<Navigate to="/results" replace />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 };
 
