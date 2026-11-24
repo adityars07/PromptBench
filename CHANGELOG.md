@@ -10,7 +10,7 @@ All notable changes to the PromptBench platform are documented below.
 - **Module 4 (Evaluator):** Dual evaluation engine featuring Python LLM-as-a-judge (Accuracy & Relevance), Scikit-Learn TF-IDF cross-run semantic consistency, and TypeScript rule-based instruction-following validation.
 - **Module 5 (Results Dashboard):** Interactive analytics dashboard with dynamic weight sliders, Recharts bar and radar charts, test case drill-down, and Best Prompt recommendation.
 - **Module 6 (Export):** Full benchmark export in RFC 4180 CSV format and executive Markdown report generation.
-- **Containerization & Deployment:** Multi-stage Dockerfile and `start.sh` for Hugging Face Spaces deployment on port 7860.
+- **Containerization & Deployment:** Multi-stage Dockerfile and `start.sh` for single-container deployment on port 7860.
 
 ## [0.9.0] - 2026-11-20
 ### Added

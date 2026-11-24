@@ -1,20 +1,9 @@
----
-title: PromptBench — AI Prompt Evaluation Platform
-emoji: ⚡
-colorFrom: indigo
-colorTo: blue
-sdk: docker
-app_port: 7860
-pinned: false
-license: mit
----
-
 # PromptBench — AI Prompt Evaluation Platform
 
 PromptBench is an end-to-end full-stack evaluation workbench designed to help AI engineers and developers systematically optimize, compare, and stress-test LLM prompts across multiple model providers. Users define evaluation benchmarks, author prompt revisions, execute multi-turn consistency runs, and inspect detailed performance analytics across accuracy, relevance, semantic consistency, and deterministic instruction-following.
 
-## 🔗 Live Prototype
-- **Hugging Face Space:** [https://huggingface.co/spaces/adityars/promptbench](https://huggingface.co/spaces/adityars/promptbench)
+## 🔗 Repository
+- **GitHub Repository:** [https://github.com/adityars07/PromptBench](https://github.com/adityars07/PromptBench)
 
 ---
 
@@ -102,22 +91,22 @@ Navigate to `http://localhost:7860` in your web browser.
 
 ---
 
-## 🐳 Docker & Hugging Face Spaces Deployment
+## 🐳 Docker Deployment
 
-The repository includes a production multi-stage `Dockerfile` and `start.sh` designed specifically for Hugging Face Docker Spaces (running on port `7860`).
+The repository includes a production multi-stage `Dockerfile` and `start.sh` that bundles both the Node backend and Python LLM service into a single container running on port `7860`.
 
-### Deploying to Hugging Face Spaces:
-1. Create a new Space on [Hugging Face Spaces](https://huggingface.co/spaces).
-2. Choose **Docker** as the Space SDK (Blank template).
-3. Under Space **Settings -> Variables and secrets**:
-   - Add Secret: `GEMINI_API_KEY` (Your Google AI Studio key)
-   - Add Secret: `GROQ_API_KEY` (Your Groq console key)
-4. Push this repository to your Space Git remote:
-   ```bash
-   git remote add space https://huggingface.co/spaces/<YOUR_USERNAME>/promptbench
-   git push space main
-   ```
-5. Set Space visibility to **Public** in the Space settings.
+### Run via Docker:
+```bash
+# 1. Build the Docker image
+docker build -t promptbench .
+
+# 2. Run container (demo mode works without keys, or pass keys as env vars)
+docker run -p 7860:7860 \
+  -e GROQ_API_KEY="your_groq_api_key_optional" \
+  -e GEMINI_API_KEY="your_gemini_api_key_optional" \
+  promptbench
+```
+Open `http://localhost:7860` in your browser.
 
 ---
 
