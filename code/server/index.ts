@@ -22,6 +22,13 @@ const ROOT = getProjectRoot();
 const CLIENT_DIST = path.join(ROOT, 'code/client/dist');
 const PYTHON_URL = process.env.PYTHON_SERVICE_URL || 'http://localhost:8001';
 
+export function getPythonUrl(endpoint: string): string {
+  const base = (process.env.PYTHON_SERVICE_URL || 'http://localhost:8001').trim();
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+  const cleanEndpoint = endpoint.replace(/^\//, '');
+  return new URL(cleanEndpoint, normalizedBase).toString();
+}
+
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -35,7 +42,7 @@ app.use('/api/export', exportRouter);
 // Judge prompt inspect endpoint
 app.get('/api/judge-prompt', async (_req: Request, res: Response) => {
   try {
-    const response = await fetch(`${PYTHON_URL}/judge-prompt`);
+    const response = await fetch(getPythonUrl('judge-prompt'));
     if (response.ok) {
       const data = await response.json();
       return res.json(data);
@@ -50,7 +57,7 @@ app.get('/api/judge-prompt', async (_req: Request, res: Response) => {
 app.get('/api/health', async (_req: Request, res: Response) => {
   let pythonHealth = 'disconnected';
   try {
-    const pyRes = await fetch(`${PYTHON_URL}/health`);
+    const pyRes = await fetch(getPythonUrl('health'));
     if (pyRes.ok) {
       const data = await pyRes.json();
       pythonHealth = data.status || 'connected';
@@ -96,9 +103,13 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`===============================================`);
-  console.log(`PromptBench Server is running on port ${PORT}`);
-  console.log(`Targeting Python Service at ${PYTHON_URL}`);
-  console.log(`===============================================`);
-});
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`===============================================`);
+    console.log(`PromptBench Server is running on port ${PORT}`);
+    console.log(`Targeting Python Service at ${PYTHON_URL}`);
+    console.log(`===============================================`);
+  });
+}
+
+export default app;

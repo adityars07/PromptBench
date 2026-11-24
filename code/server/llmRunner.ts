@@ -81,7 +81,11 @@ export function getLatestResults(): EvalResult[] {
 
 // Helper: HTTP request using native fetch
 async function callPython(endpoint: string, body: any): Promise<any> {
-  const url = `${PYTHON_URL}${endpoint}`;
+  const base = (process.env.PYTHON_SERVICE_URL || 'http://localhost:8001').trim();
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+  const cleanEndpoint = endpoint.replace(/^\//, '');
+  const url = new URL(cleanEndpoint, normalizedBase).toString();
+
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "client": {
+      "root": "code/client",
+      "framework": "vite"
+    },
+    "server": {
+      "root": "code/server",
+      "framework": "express",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "llm-service",
+          "format": "url",
+          "env": "PYTHON_SERVICE_URL"
+        }
+      ]
+    },
+    "llm-service": {
+      "root": "code/llm_service",
+      "framework": "fastapi"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "server"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "client"
+      }
+    }
+  ]
+}
