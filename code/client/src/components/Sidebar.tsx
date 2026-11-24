@@ -1,5 +1,14 @@
 import React from 'react';
-import { WeightConfig } from '../types';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {
+  ChecklistIcon,
+  DocumentIcon,
+  PlayIcon,
+  BarChartIcon,
+  DownloadIcon,
+  BrandSymbol
+} from './Icons';
+import { WeightSettings } from '../types';
 
 interface SidebarProps {
   demoMode: boolean;
@@ -8,8 +17,8 @@ interface SidebarProps {
   setSelectedModels: React.Dispatch<React.SetStateAction<string[]>>;
   runsPerCase: number;
   setRunsPerCase: (val: number) => void;
-  weights: WeightConfig;
-  setWeights: React.Dispatch<React.SetStateAction<WeightConfig>>;
+  weights: WeightSettings;
+  setWeights: React.Dispatch<React.SetStateAction<WeightSettings>>;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -22,164 +31,216 @@ export const Sidebar: React.FC<SidebarProps> = ({
   weights,
   setWeights
 }) => {
-  const toggleModel = (m: string) => {
-    if (selectedModels.includes(m)) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const toggleModel = (modelName: string) => {
+    if (selectedModels.includes(modelName)) {
       if (selectedModels.length > 1) {
-        setSelectedModels(selectedModels.filter(item => item !== m));
+        setSelectedModels(selectedModels.filter(m => m !== modelName));
       }
     } else {
-      setSelectedModels([...selectedModels, m]);
+      setSelectedModels([...selectedModels, modelName]);
     }
   };
 
-  const handleWeightChange = (key: keyof WeightConfig, val: number) => {
-    setWeights(prev => ({ ...prev, [key]: val }));
+  const handleWeightChange = (key: keyof WeightSettings, val: number) => {
+    setWeights(prev => ({
+      ...prev,
+      [key]: val
+    }));
+  };
+
+  const handleExportNavClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname !== '/' && location.pathname !== '/results') {
+      navigate('/results');
+    }
+    setTimeout(() => {
+      const exportElem = document.getElementById('export-actions');
+      if (exportElem) {
+        exportElem.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
     <aside className="sidebar">
-      <div className="brand-header">
-        <div className="brand-logo">⚡</div>
-        <div>
-          <div className="brand-title">PromptBench</div>
-          <div className="brand-subtitle">Evaluation Suite</div>
-        </div>
+      {/* 1. Logo */}
+      <div className="brand-logo-area">
+        <BrandSymbol size={32} />
+        <span className="brand-text">PromptBench</span>
       </div>
 
-      {/* Demo Mode Toggle */}
-      <div className="sidebar-section">
-        <div className="toggle-wrapper">
-          <div>
-            <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>Demo Mode</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              Uses cached benchmarks
-            </div>
-          </div>
-          <label className="toggle-switch">
+      {/* 2. Navigation */}
+      <nav className="nav-group" aria-label="Main Navigation">
+        <NavLink
+          to="/task"
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <ChecklistIcon />
+          <span>Task & Test Cases</span>
+        </NavLink>
+
+        <NavLink
+          to="/prompts"
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <DocumentIcon />
+          <span>Prompts</span>
+        </NavLink>
+
+        <NavLink
+          to="/run"
+          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+        >
+          <PlayIcon />
+          <span>Run Evaluation</span>
+        </NavLink>
+
+        <NavLink
+          to="/results"
+          className={({ isActive }) =>
+            `nav-item ${isActive || location.pathname === '/' ? 'active' : ''}`
+          }
+        >
+          <BarChartIcon />
+          <span>Results</span>
+        </NavLink>
+
+        <button
+          onClick={handleExportNavClick}
+          className="nav-item"
+          aria-label="Export results"
+        >
+          <DownloadIcon />
+          <span>Export</span>
+        </button>
+      </nav>
+
+      {/* 3. Settings Card */}
+      <div className="settings-card">
+        <div className="settings-label">SETTINGS</div>
+
+        <div className="settings-row">
+          <span className="settings-field-title">Demo mode</span>
+          <label className="checkbox-control">
             <input
               type="checkbox"
               checked={demoMode}
               onChange={e => setDemoMode(e.target.checked)}
+              aria-label="Toggle Demo mode"
             />
-            <span className="slider-round"></span>
           </label>
         </div>
-      </div>
 
-      {/* Model Selection */}
-      <div className="sidebar-section">
-        <div className="section-label">Target Models</div>
-        <div className="checkbox-group">
-          <label className="checkbox-label">
+        {/* Models Selection */}
+        <div className="slider-group">
+          <div className="slider-header">
+            <span>Models</span>
+          </div>
+          <label className="checkbox-control" style={{ marginTop: '4px' }}>
             <input
               type="checkbox"
-              checked={selectedModels.includes('gemini-1.5-flash')}
-              onChange={() => toggleModel('gemini-1.5-flash')}
+              checked={selectedModels.includes('Gemini 2.5 Flash')}
+              onChange={() => toggleModel('Gemini 2.5 Flash')}
             />
-            <span>Google Gemini 1.5 Flash</span>
+            <span>Gemini 2.5 Flash</span>
           </label>
-          <label className="checkbox-label">
+          <label className="checkbox-control" style={{ marginTop: '2px' }}>
             <input
               type="checkbox"
-              checked={selectedModels.includes('llama-3.1-8b-instant')}
-              onChange={() => toggleModel('llama-3.1-8b-instant')}
+              checked={selectedModels.includes('Llama 3.3 70B')}
+              onChange={() => toggleModel('Llama 3.3 70B')}
             />
-            <span>Groq Llama 3.1 8B</span>
+            <span>Llama 3.3 70B (Groq)</span>
           </label>
         </div>
-      </div>
 
-      {/* Runs Per Case */}
-      <div className="sidebar-section">
-        <div className="range-header">
-          <span className="section-label">Runs per Test Case</span>
-          <span style={{ fontWeight: 700, color: 'var(--accent-cyan)' }}>{runsPerCase}x</span>
-        </div>
-        <input
-          type="range"
-          min="1"
-          max="5"
-          step="1"
-          value={runsPerCase}
-          onChange={e => setRunsPerCase(Number(e.target.value))}
-        />
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-          <span>1 (Fast)</span>
-          <span>3 (Default)</span>
-          <span>5 (Deep)</span>
-        </div>
-      </div>
-
-      {/* Metric Weight Sliders */}
-      <div className="sidebar-section">
-        <div className="section-label">Metric Weights</div>
-        
-        <div className="range-container">
-          <div className="range-header">
-            <span>Accuracy</span>
-            <span>{Math.round(weights.accuracy * 100)}%</span>
+        {/* Runs per case */}
+        <div className="slider-group">
+          <div className="slider-header">
+            <span>Runs per case: {runsPerCase}</span>
           </div>
           <input
             type="range"
-            min="0"
-            max="1"
-            step="0.05"
-            value={weights.accuracy}
-            onChange={e => handleWeightChange('accuracy', parseFloat(e.target.value))}
+            min="1"
+            max="5"
+            step="1"
+            value={runsPerCase}
+            onChange={e => setRunsPerCase(Number(e.target.value))}
+            aria-label="Runs per test case"
           />
         </div>
 
-        <div className="range-container">
-          <div className="range-header">
-            <span>Relevance</span>
-            <span>{Math.round(weights.relevance * 100)}%</span>
+        {/* Score weights */}
+        <div className="slider-group">
+          <div className="slider-header">
+            <span style={{ fontWeight: 600 }}>Score weights</span>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.05"
-            value={weights.relevance}
-            onChange={e => handleWeightChange('relevance', parseFloat(e.target.value))}
-          />
-        </div>
 
-        <div className="range-container">
-          <div className="range-header">
-            <span>Consistency</span>
-            <span>{Math.round(weights.consistency * 100)}%</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px' }}>
+            <div>
+              <div className="slider-header" style={{ fontSize: '12px' }}>
+                <span>Accuracy {weights.accuracy}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                value={weights.accuracy}
+                onChange={e => handleWeightChange('accuracy', Number(e.target.value))}
+                aria-label="Accuracy weight"
+              />
+            </div>
+
+            <div>
+              <div className="slider-header" style={{ fontSize: '12px' }}>
+                <span>Relevance {weights.relevance}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                value={weights.relevance}
+                onChange={e => handleWeightChange('relevance', Number(e.target.value))}
+                aria-label="Relevance weight"
+              />
+            </div>
+
+            <div>
+              <div className="slider-header" style={{ fontSize: '12px' }}>
+                <span>Consistency {weights.consistency}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                value={weights.consistency}
+                onChange={e => handleWeightChange('consistency', Number(e.target.value))}
+                aria-label="Consistency weight"
+              />
+            </div>
+
+            <div>
+              <div className="slider-header" style={{ fontSize: '12px' }}>
+                <span>Instruction-following {weights.instruction}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                value={weights.instruction}
+                onChange={e => handleWeightChange('instruction', Number(e.target.value))}
+                aria-label="Instruction-following weight"
+              />
+            </div>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.05"
-            value={weights.consistency}
-            onChange={e => handleWeightChange('consistency', parseFloat(e.target.value))}
-          />
         </div>
-
-        <div className="range-container">
-          <div className="range-header">
-            <span>Instruction Following</span>
-            <span>{Math.round(weights.instructionFollowing * 100)}%</span>
-          </div>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.05"
-            value={weights.instructionFollowing}
-            onChange={e => handleWeightChange('instructionFollowing', parseFloat(e.target.value))}
-          />
-        </div>
-      </div>
-
-      {/* Team PromptX Footer */}
-      <div style={{ marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-        <div><strong>Team PromptX</strong></div>
-        <div>Kartikey Pandey (S24CSEU1344)</div>
-        <div>Aditya (S24CSEU1357)</div>
       </div>
     </aside>
   );
